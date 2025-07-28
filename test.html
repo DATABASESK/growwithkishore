@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fixed Footer</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #6f42c1;
+            --secondary: #ffd700;
+            --light: #ffffff;
+            --dark: #212529;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Footer Styles */
+        .footer {
+            margin-top: 6rem;
+            padding-top: 4rem;
+            background: linear-gradient(135deg, var(--primary) 0%, #5a2d91 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .footer-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer .section-title {
+            color: var(--light) !important;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem !important;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--secondary);
+            border-radius: 2px;
+        }
+
+        .footer .contact-info p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer .contact-info i {
+            width: 20px;
+            margin-right: 15px;
+            color: var(--secondary);
+            font-size: 1.1rem;
+        }
+
+        .footer .btn.btn-social {
+            margin-right: 8px;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--light);
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            text-decoration: none;
+        }
+
+        .footer .btn.btn-social:hover {
+            background: var(--secondary);
+            color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+            border-color: var(--secondary);
+        }
+
+        .footer .btn.btn-link {
+            display: block;
+            margin-bottom: 12px;
+            padding: 8px 0;
+            text-align: left;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: normal;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            position: relative;
+            border: none;
+            background: none;
+        }
+
+        .footer .btn.btn-link::before {
+            position: absolute;
+            content: "\f105";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            left: -20px;
+            opacity: 0;
+            transition: all 0.3s ease;
+            color: var(--secondary);
+        }
+
+        .footer .btn.btn-link:hover {
+            color: var(--secondary);
+            padding-left: 20px;
+            transform: translateX(5px);
+        }
+
+        .footer .btn.btn-link:hover::before {
+            opacity: 1;
+            left: 0;
+        }
+
+        .footer .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 1rem;
+        }
+
+        .footer .gallery-item {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .footer .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .footer .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .footer .gallery-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer .gallery-item:hover::before {
+            opacity: 1;
+        }
+
+        .footer .newsletter-text {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer .newsletter-form {
+            position: relative;
+        }
+
+        .footer .newsletter-form .form-control {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 15px 60px 15px 20px;
+            height: auto;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .footer .newsletter-form .form-control:focus {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 0.2rem rgba(255, 215, 0, 0.25);
+            color: white;
+        }
+
+        .footer .newsletter-form .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .footer .newsletter-form .btn {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            width: 40px;
+            height: 40px;
+            background: var(--secondary);
+            border: none;
+            border-radius: 50%;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .footer .newsletter-form .btn:hover {
+            background: #ffed4e;
+            transform: scale(1.1);
+        }
+
+        .footer .copyright {
+            margin-top: 3rem;
+            padding: 25px 0;
+            font-size: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .footer .copyright a {
+            color: var(--secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer .copyright a:hover {
+            color: #ffed4e;
+            text-decoration: underline;
+        }
+
+        .footer .footer-menu {
+            display: flex;
+            gap: 0;
+            flex-wrap: wrap;
+            justify-content: center;
+            justify-content: end;
+        }
+
+        .footer .footer-menu a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            margin-right: 15px;
+            padding-right: 15px;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            transition: color 0.3s ease;
+        }
+
+        .footer .footer-menu a:last-child {
+            margin-right: 0;
+            padding-right: 0;
+            border-right: none;
+        }
+
+        .footer .footer-menu a:hover {
+            color: var(--secondary);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .footer .footer-menu {
+                justify-content: center;
+                margin-top: 1rem;
+            }
+            
+            .footer .gallery-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 6px;
+            }
+            
+            .footer .section-title::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .footer .btn.btn-social {
+                width: 40px;
+                height: 40px;
+                margin-right: 5px;
+            }
+        }
+
+        /* Demo content styles */
+        .demo-content {
+            min-height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <!-- Demo content -->
+    <div class="demo-content">
+        <div class="text-center">
+            <h1 style="color: #6f42c1; margin-bottom: 1rem;">SK DGital</h1>
+            <p class="lead">Professional Digital Marketing Training Institute</p>
+        </div>
+    </div>
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-primary text-light footer wow fadeIn" data-wow-delay="0.1s">
+        <div class="footer-content">
+            <div class="container py-5 px-lg-5">
+                <div class="row g-5">
+                    <div class="col-md-6 col-lg-3">
+                        <p class="section-title text-white h5 mb-4">Address<span></span></p>
+                        <div class="contact-info">
+                            <p><i class="fa fa-map-marker-alt me-3"></i>Sector 1, K.K Nagar, Chennai</p>
+                            <p><i class="fa fa-phone-alt me-3"></i>+91 89391 44574</p>
+                            <p><i class="fa fa-envelope me-3"></i>growwithkishore@gmail.com</p>
+                        </div>
+                        <div class="d-flex pt-2">
+                            <a class="btn btn-outline-light btn-social" href="https://x.com/growwithkishore" aria-label="Twitter">
+                                <i class="bi bi-twitter-x"></i>
+                            </a>
+                            <a class="btn btn-outline-light btn-social" href="#" aria-label="Facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a class="btn btn-outline-light btn-social" href="https://www.instagram.com/growwithkishore/" aria-label="Instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a class="btn btn-outline-light btn-social" href="https://www.linkedin.com/in/growwithkishore" aria-label="LinkedIn">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-3">
+                        <p class="section-title text-white h5 mb-4">Quick Links<span></span></p>
+                        <a class="btn btn-link" href="#">About Us</a>
+                        <a class="btn btn-link" href="#">Contact Us</a>
+                        <a class="btn btn-link" href="#">Privacy Policy</a>
+                        <a class="btn btn-link" href="#">Terms & Condition</a>
+                        <a class="btn btn-link" href="#">Career</a>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-3">
+                        <p class="section-title text-white h5 mb-4">Gallery<span></span></p>
+                        <div class="gallery-grid">
+                            <div class="gallery-item">
+                                <img class="img-fluid" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=200&h=200&fit=crop" alt="Digital Marketing">
+                            </div>
+                            <div class="gallery-item">
+                                <img class="img-fluid" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=200&h=200&fit=crop" alt="SEO Analysis">
+                            </div>
+                            <div class="gallery-item">
+                                <img class="img-fluid" src="https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=200&h=200&fit=crop" alt="Web Development">
+                            </div>
+                            <div class="gallery-item">
+                                <img class="img-fluid" src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=200&h=200&fit=crop" alt="Social Media">
+                            </div>
+                            <div class="gallery-item">
+                                <img class="img-fluid" src="https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=200&h=200&fit=crop" alt="Content Strategy">
+                            </div>
+                            <div class="gallery-item">
+                                <img class="img-fluid" src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=200&h=200&fit=crop" alt="Analytics">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-3">
+                        <p class="section-title text-white h5 mb-4">Newsletter<span></span></p>
+                        <p class="newsletter-text">Stay connected with our latest updates, industry insights, and exclusive offers through our newsletter that delivers valuable digital marketing tips, trends, and strategies directly to your inbox.</p>
+                        <div class="position-relative w-100 mt-3 newsletter-form">
+                            <input class="form-control border-0 rounded-pill w-100 ps-4 pe-5" type="email" placeholder="Your Email" style="height: 48px;">
+                            <button type="button" class="btn shadow-none position-absolute top-0 end-0 mt-1 me-2">
+                                <i class="fa fa-paper-plane fs-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="container px-lg-5">
+                <div class="copyright">
+                    <div class="row">
+                        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                            &copy; <a class="border-bottom" href="#">SK DGital</a>, All Rights Reserved. 
+                            Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>
+                        </div>
+                        <div class="col-md-6 text-center text-md-end">
+                            <div class="footer-menu">
+                                <a href="#">Home</a>
+                                <a href="#">Cookies</a>
+                                <a href="#">Help</a>
+                                <a href="#">FAQs</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Newsletter subscription functionality
+        document.querySelector('.newsletter-form .btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            const emailInput = document.querySelector('.newsletter-form .form-control');
+            const email = emailInput.value.trim();
+            
+            if (email && isValidEmail(email)) {
+                // Animation feedback
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1.1)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 150);
+                }, 100);
+                
+                // Success feedback
+                emailInput.value = '';
+                emailInput.placeholder = 'Thank you for subscribing!';
+                setTimeout(() => {
+                    emailInput.placeholder = 'Your Email';
+                }, 3000);
+                
+                console.log('Newsletter subscription:', email);
+            } else {
+                // Error animation
+                emailInput.style.animation = 'shake 0.5s';
+                emailInput.style.borderColor = '#ff6b6b';
+                setTimeout(() => {
+                    emailInput.style.animation = '';
+                    emailInput.style.borderColor = '';
+                }, 500);
+            }
+        });
+        
+        // Email validation function
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+        
+        // Add shake animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-5px); }
+                75% { transform: translateX(5px); }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Enter key support for newsletter
+        document.querySelector('.newsletter-form .form-control').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('.newsletter-form .btn').click();
+            }
+        });
+    </script>
+</body>
+</html>
