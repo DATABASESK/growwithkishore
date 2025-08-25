@@ -3,167 +3,503 @@
 
 <head>
     <!-- Primary Meta Tags -->
-    <title>Blog & Articles - SK Digital | Digital Marketing Agency in Chennai</title>
-    <meta name="title" content="Blog & Articles - SK Digital | Digital Marketing Agency in Chennai">
-    <meta name="description" content="Read expert blogs and articles on Digital Marketing, SEO, SMM, PPC, and Web Design to boost your online presence.">
+    <title>Digital Marketing Blog & Articles | Expert Tips & Strategies</title>
+    <meta name="title" content="Digital Marketing Blog & Articles | Expert Tips & Strategies">
+    <meta name="description" content="Read our latest digital marketing articles covering SEO, social media, PPC, and web development. Get expert insights and practical tips to grow your business online.">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://growwithkishore.vercel.app/blog.html">
-    <meta property="og:title" content="Blog & Articles - SK Digital | Digital Marketing Agency">
-    <meta property="og:description" content="Explore the latest digital marketing articles and guides to improve SEO, social media, and business growth.">
-    <meta property="og:image" content="https://growwithkishore.vercel.app/img/hero.png">
+    <meta property="og:title" content="Digital Marketing Blog & Articles | Expert Tips & Strategies">
+    <meta property="og:description" content="Read our latest digital marketing articles covering SEO, social media, PPC, and web development. Get expert insights and practical tips to grow your business online.">
+    <meta property="og:image" content="https://growwithkishore.vercel.app/img/banner-right.png">
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://growwithkishore.vercel.app/blog.html">
-    <meta property="twitter:title" content="Blog & Articles - SK Digital | Digital Marketing Agency">
-    <meta property="twitter:description" content="Explore the latest digital marketing articles and guides to improve SEO, social media, and business growth.">
+    <meta property="twitter:title" content="Digital Marketing Blog & Articles | Expert Tips & Strategies">
+    <meta property="twitter:description" content="Read our latest digital marketing articles covering SEO, social media, PPC, and web development. Get expert insights and practical tips to grow your business online.">
     <meta property="twitter:image" content="https://growwithkishore.vercel.app/img/hero.png">
-
+    
     <!-- Optional Meta Tags -->
-    <meta name="keywords" content="Digital Marketing Blog, SEO Articles, Online Marketing Tips, Social Media Guides">
+    <meta name="keywords" content="Digital Marketing Blog, SEO Articles, Social Media Tips, PPC Strategies">
     <meta name="robots" content="index, follow">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="1 Day">
     <meta name="author" content="Kishore S">
+
     <link rel="canonical" href="https://growwithkishore.vercel.app/blog.html" />
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
 
-    <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500&family=Jost:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500&family=Jost:wght@500;600;700&display=swap" rel="stylesheet"> 
+
+    <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
-    <!-- Libraries -->
+    <!-- Libraries Stylesheet -->
     <link href="lib/animate/animate.min.css" rel="stylesheet">
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
 
-    <!-- Bootstrap & Styles -->
+    <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    
+    <!-- Custom Footer Fix CSS -->
+    <link rel="alternate" hreflang="en-IN" href="https://growwithkishore.vercel.app/blog.html"/>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PZZB1G59Z5"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-PZZB1G59Z5');
+
+      // Disable right-click
+      document.addEventListener("contextmenu", function(e){
+        e.preventDefault();
+      });
+
+      // Disable Ctrl+U, Ctrl+Shift+I, F12
+      document.addEventListener("keydown", function(e) {
+        if (e.ctrlKey && (e.key === "u" || e.key === "U" || (e.shiftKey && e.key === "I"))) {
+          e.preventDefault();
+        }
+        if (e.key === "F12") {
+          e.preventDefault();
+        }
+      });
+    </script>
+
+    <style>
+        .blog-item {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .blog-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .blog-meta {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        .blog-excerpt {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .category-badge {
+            font-size: 0.8rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+        }
+        .search-box {
+            border: 2px solid #e9ecef;
+            border-radius: 50px;
+            transition: border-color 0.3s ease;
+        }
+        .search-box:focus {
+            border-color: var(--primary);
+            box-shadow: none;
+        }
+        .sidebar-widget {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .sidebar-widget h5 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+        .recent-post {
+            padding: 1rem 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        .recent-post:last-child {
+            border-bottom: none;
+        }
+        .recent-post img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .tag-cloud a {
+            display: inline-block;
+            background: #e9ecef;
+            color: #6c757d;
+            padding: 0.5rem 1rem;
+            margin: 0.25rem;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .tag-cloud a:hover {
+            background: var(--primary);
+            color: white;
+        }
+        .pagination .page-link {
+            border-radius: 50px;
+            margin: 0 0.25rem;
+            border: 2px solid #e9ecef;
+            color: var(--primary);
+        }
+        .pagination .page-item.active .page-link {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+    </style>
 </head>
 
 <body>
     <div class="container-xxl bg-white p-0">
 
-        <!-- Navbar Start -->
-        <div class="container-xxl position-relative p-0">
-            <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
-                <a href="index.html" class="navbar-brand p-0">
-                    <h1 class="m-0">SK Digital</h1>
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                    <span class="fa fa-bars"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <div class="navbar-nav mx-auto py-0">
-                        <a href="index.html" class="nav-item nav-link">Home</a>
-                        <a href="about.html" class="nav-item nav-link">About</a>
-                        <a href="service.html" class="nav-item nav-link">Service</a>
-                        <a href="project.html" class="nav-item nav-link">Project</a>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                            <div class="dropdown-menu m-0">
-                                <a href="team.html" class="dropdown-item">Our Team</a>
-                                <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                                <a href="faqs.html" class="dropdown-item">FAQs</a>
-                                <a href="blog.html" class="dropdown-item active">Blog</a>
-                            </div>
-                        </div>
-                        <a href="contact.html" class="nav-item nav-link">Contact</a>
-                    </div>
-                    <a href="contact.html" class="btn rounded-pill py-2 px-4 ms-3 d-none d-lg-block">Get Started</a>
-                </div>
-            </nav>
-
-            <!-- Header Start -->
-            <div class="container-xxl bg-primary faq-header">
-                <div class="container px-lg-5">
-                    <div class="row g-5 align-items-center">
-                        <div class="col-lg-7 text-center text-lg-start">
-                            <h1 class="text-white mb-4 animated slideInDown">Latest <span class="text-secondary">Articles & Blogs</span></h1>
-                            <p class="text-white pb-3 animated slideInDown">Stay updated with our latest digital marketing blogs, SEO tips, case studies, and growth hacks to help your business succeed online.</p>
-                        </div>
-                        <div class="col-lg-5 text-center text-lg-start">
-                            <img class="img-fluid animated zoomIn" src="https://img.freepik.com/free-vector/blogging-concept-illustration_114360-1038.jpg" alt="Blog & Articles">
-                        </div>
-                    </div>
-                </div>
+        <!-- Spinner Start -->
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
             </div>
-            <!-- Header End -->
         </div>
+        <!-- Spinner End -->
+
+        <!-- Navbar Start -->
+        <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
+            <a href="index.html" class="navbar-brand p-0">
+                <h1 class="m-0">PK DGital</h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="fa fa-bars"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav mx-auto py-0">
+                    <a href="index.html" class="nav-item nav-link">Home</a>
+                    <a href="about.html" class="nav-item nav-link">About</a>
+                    <a href="service.html" class="nav-item nav-link">Service</a>
+                    <a href="project.html" class="nav-item nav-link">Project</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                        <div class="dropdown-menu m-0">
+                            <a href="team.html" class="dropdown-item">Our Team</a>
+                            <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                            <a href="404.html" class="dropdown-item">404 Page</a>
+                            <a href="faqs.html" class="dropdown-item">FAQs</a>
+                            <a href="blog.html" class="dropdown-item">Blog</a>
+                        </div>
+                    </div>
+                    <a href="contact.html" class="nav-item nav-link">Contact</a>
+                </div>
+                <a href="contact.html" class="btn rounded-pill py-2 px-4 ms-3 d-none d-lg-block">Get Started</a>
+            </div>
+        </nav>
         <!-- Navbar End -->
 
-        <!-- Blog Section Start -->
+        <!-- Page Header Start -->
+        <div class="container-xxl py-5 bg-primary hero-header">
+            <div class="container py-5 px-lg-5">
+                <div class="row g-5 align-items-center">
+                    <div class="col-lg-6 text-center text-lg-start">
+                        <h1 class="text-white mb-4 animated slideInDown">Digital Marketing Blog & Articles</h1>
+                        <p class="text-white pb-3 animated slideInDown">Stay updated with the latest trends, tips, and strategies in digital marketing. Our expert insights help you grow your business online through proven techniques and industry best practices.</p>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb justify-content-center justify-content-lg-start">
+                                <li class="breadcrumb-item"><a class="text-white" href="index.html">Home</a></li>
+                                <li class="breadcrumb-item text-white active" aria-current="page">Blog</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="col-lg-6 text-center text-lg-end">
+                        <img class="img-fluid animated zoomIn" src="img/banner-right.png" alt="Digital Marketing Blog" title="Digital Marketing Articles">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Page Header End -->
+
+        <!-- Blog Start -->
         <div class="container-xxl py-5">
             <div class="container py-5 px-lg-5">
-                <div class="section-title text-center mb-5">
-                    <p class="section-title text-secondary justify-content-center"><span></span>Our Blog<span></span></p>
-                    <h2 class="mb-4">Explore Our Latest Articles</h2>
-                    <p>Read expert-written blogs on SEO, SMM, Google Ads, Web Design, and Digital Marketing trends.</p>
-                </div>
-
-                <div class="row g-4">
-                    <!-- Blog Post 1 -->
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="card h-100 shadow-sm border-0 rounded">
-                            <img src="img/blog-1.jpg" class="card-img-top rounded-top" alt="SEO Tips">
-                            <div class="card-body">
-                                <h5 class="card-title">Top 10 SEO Tips for Beginners in 2025</h5>
-                                <p class="card-text">Learn the most effective SEO strategies to boost your website rankings on Google and attract organic traffic.</p>
-                                <a href="article-seo-tips.html" class="btn btn-primary rounded-pill mt-3">Read More</a>
+                <div class="row g-5">
+                    <!-- Main Content -->
+                    <div class="col-lg-8">
+                        <!-- Featured Article -->
+                        <div class="blog-item bg-light rounded overflow-hidden mb-5">
+                            <img class="img-fluid w-100" src="img/featured-blog.jpg" alt="Featured Article" style="height: 300px; object-fit: cover;">
+                            <div class="p-4">
+                                <div class="d-flex justify-content-between mb-3">
+                                    <span class="category-badge bg-primary text-white">Featured</span>
+                                    <small class="blog-meta"><i class="fa fa-calendar-alt me-2"></i>January 15, 2025</small>
+                                </div>
+                                <h3 class="mb-3">The Complete Guide to Digital Marketing in 2025: Trends and Strategies</h3>
+                                <p class="blog-excerpt">Digital marketing continues to evolve at breakneck speed. As we enter 2025, businesses must adapt to new technologies, changing consumer behaviors, and emerging platforms. This comprehensive guide covers everything you need to know about modern digital marketing strategies...</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="blog-meta">
+                                        <small><i class="fa fa-user me-2"></i>By Kishore</small>
+                                        <small class="ms-3"><i class="fa fa-comments me-2"></i>24 Comments</small>
+                                    </div>
+                                    <a href="#" class="btn btn-primary btn-sm">Read More</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Blog Post 2 -->
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                        <div class="card h-100 shadow-sm border-0 rounded">
-                            <img src="img/blog-2.jpg" class="card-img-top rounded-top" alt="Social Media Marketing">
-                            <div class="card-body">
-                                <h5 class="card-title">How Social Media Marketing Builds Brands</h5>
-                                <p class="card-text">Discover how platforms like Instagram, Facebook, and LinkedIn can grow your business visibility and engagement.</p>
-                                <a href="article-smm.html" class="btn btn-primary rounded-pill mt-3">Read More</a>
+                        <!-- Blog Grid -->
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="blog-item bg-light rounded overflow-hidden h-100">
+                                    <img class="img-fluid w-100" src="img/blog-1.jpg" alt="SEO Tips" style="height: 200px; object-fit: cover;">
+                                    <div class="p-4 d-flex flex-column h-100">
+                                        <div class="d-flex justify-content-between mb-3">
+                                            <span class="category-badge bg-success text-white">SEO</span>
+                                            <small class="blog-meta"><i class="fa fa-calendar-alt me-2"></i>Jan 12, 2025</small>
+                                        </div>
+                                        <h5 class="mb-3">10 SEO Mistakes That Are Killing Your Rankings</h5>
+                                        <p class="blog-excerpt flex-grow-1">Learn about the most common SEO mistakes that could be hurting your search engine rankings and how to fix them for better visibility.</p>
+                                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                                            <small class="blog-meta"><i class="fa fa-user me-2"></i>By Meena</small>
+                                            <a href="#" class="btn btn-outline-primary btn-sm">Read More</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="blog-item bg-light rounded overflow-hidden h-100">
+                                    <img class="img-fluid w-100" src="img/blog-2.jpg" alt="Social Media Marketing" style="height: 200px; object-fit: cover;">
+                                    <div class="p-4 d-flex flex-column h-100">
+                                        <div class="d-flex justify-content-between mb-3">
+                                            <span class="category-badge bg-info text-white">Social Media</span>
+                                            <small class="blog-meta"><i class="fa fa-calendar-alt me-2"></i>Jan 10, 2025</small>
+                                        </div>
+                                        <h5 class="mb-3">Social Media Marketing Strategies That Actually Work</h5>
+                                        <p class="blog-excerpt flex-grow-1">Discover proven social media strategies that drive engagement, build brand awareness, and convert followers into customers.</p>
+                                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                                            <small class="blog-meta"><i class="fa fa-user me-2"></i>By Priya</small>
+                                            <a href="#" class="btn btn-outline-primary btn-sm">Read More</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="blog-item bg-light rounded overflow-hidden h-100">
+                                    <img class="img-fluid w-100" src="img/blog-3.jpg" alt="PPC Advertising" style="height: 200px; object-fit: cover;">
+                                    <div class="p-4 d-flex flex-column h-100">
+                                        <div class="d-flex justify-content-between mb-3">
+                                            <span class="category-badge bg-warning text-white">PPC</span>
+                                            <small class="blog-meta"><i class="fa fa-calendar-alt me-2"></i>Jan 8, 2025</small>
+                                        </div>
+                                        <h5 class="mb-3">Maximizing ROI with Google Ads: A Beginner's Guide</h5>
+                                        <p class="blog-excerpt flex-grow-1">Learn how to create effective Google Ads campaigns that deliver maximum return on investment with proper targeting and optimization.</p>
+                                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                                            <small class="blog-meta"><i class="fa fa-user me-2"></i>By Kishore</small>
+                                            <a href="#" class="btn btn-outline-primary btn-sm">Read More</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="blog-item bg-light rounded overflow-hidden h-100">
+                                    <img class="img-fluid w-100" src="img/blog-4.jpg" alt="Email Marketing" style="height: 200px; object-fit: cover;">
+                                    <div class="p-4 d-flex flex-column h-100">
+                                        <div class="d-flex justify-content-between mb-3">
+                                            <span class="category-badge bg-secondary text-white">Email Marketing</span>
+                                            <small class="blog-meta"><i class="fa fa-calendar-alt me-2"></i>Jan 5, 2025</small>
+                                        </div>
+                                        <h5 class="mb-3">Email Marketing Automation: Set It and Forget It</h5>
+                                        <p class="blog-excerpt flex-grow-1">Discover how to create automated email sequences that nurture leads and drive conversions while you sleep.</p>
+                                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                                            <small class="blog-meta"><i class="fa fa-user me-2"></i>By Priya</small>
+                                            <a href="#" class="btn btn-outline-primary btn-sm">Read More</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="blog-item bg-light rounded overflow-hidden h-100">
+                                    <img class="img-fluid w-100" src="img/blog-5.jpg" alt="Web Development" style="height: 200px; object-fit: cover;">
+                                    <div class="p-4 d-flex flex-column h-100">
+                                        <div class="d-flex justify-content-between mb-3">
+                                            <span class="category-badge bg-dark text-white">Web Design</span>
+                                            <small class="blog-meta"><i class="fa fa-calendar-alt me-2"></i>Jan 3, 2025</small>
+                                        </div>
+                                        <h5 class="mb-3">Responsive Web Design: Best Practices for 2025</h5>
+                                        <p class="blog-excerpt flex-grow-1">Learn the latest responsive design techniques and best practices to create websites that look great on all devices.</p>
+                                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                                            <small class="blog-meta"><i class="fa fa-user me-2"></i>By Meena</small>
+                                            <a href="#" class="btn btn-outline-primary btn-sm">Read More</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="blog-item bg-light rounded overflow-hidden h-100">
+                                    <img class="img-fluid w-100" src="img/blog-6.jpg" alt="Content Marketing" style="height: 200px; object-fit: cover;">
+                                    <div class="p-4 d-flex flex-column h-100">
+                                        <div class="d-flex justify-content-between mb-3">
+                                            <span class="category-badge bg-danger text-white">Content Marketing</span>
+                                            <small class="blog-meta"><i class="fa fa-calendar-alt me-2"></i>Jan 1, 2025</small>
+                                        </div>
+                                        <h5 class="mb-3">Content Marketing Strategy: From Planning to Execution</h5>
+                                        <p class="blog-excerpt flex-grow-1">A comprehensive guide to creating and implementing a content marketing strategy that drives traffic and engages your audience.</p>
+                                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                                            <small class="blog-meta"><i class="fa fa-user me-2"></i>By Kishore</small>
+                                            <a href="#" class="btn btn-outline-primary btn-sm">Read More</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
+                        <!-- Pagination -->
+                        <nav aria-label="Blog pagination" class="mt-5">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#" tabindex="-1"><i class="fa fa-chevron-left"></i></a>
+                                </li>
+                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#"><i class="fa fa-chevron-right"></i></a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
 
-                    <!-- Blog Post 3 -->
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                        <div class="card h-100 shadow-sm border-0 rounded">
-                            <img src="img/blog-3.jpg" class="card-img-top rounded-top" alt="Google Ads Guide">
-                            <div class="card-body">
-                                <h5 class="card-title">Google Ads Guide: Boost ROI in 2025</h5>
-                                <p class="card-text">Step-by-step guide to setting up Google Ads campaigns that convert clicks into real paying customers.</p>
-                                <a href="article-google-ads.html" class="btn btn-primary rounded-pill mt-3">Read More</a>
+                    <!-- Sidebar -->
+                    <div class="col-lg-4">
+                        <!-- Search Widget -->
+                        <div class="sidebar-widget">
+                            <h5>Search Articles</h5>
+                            <div class="input-group">
+                                <input type="text" class="form-control search-box" placeholder="Search for articles...">
+                                <button class="btn btn-primary" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Categories Widget -->
+                        <div class="sidebar-widget">
+                            <h5>Categories</h5>
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><a href="#" class="text-decoration-none d-flex justify-content-between"><span>SEO Optimization</span> <span class="badge bg-primary">12</span></a></li>
+                                <li class="mb-2"><a href="#" class="text-decoration-none d-flex justify-content-between"><span>Social Media Marketing</span> <span class="badge bg-primary">8</span></a></li>
+                                <li class="mb-2"><a href="#" class="text-decoration-none d-flex justify-content-between"><span>PPC Advertising</span> <span class="badge bg-primary">6</span></a></li>
+                                <li class="mb-2"><a href="#" class="text-decoration-none d-flex justify-content-between"><span>Email Marketing</span> <span class="badge bg-primary">9</span></a></li>
+                                <li class="mb-2"><a href="#" class="text-decoration-none d-flex justify-content-between"><span>Web Design</span> <span class="badge bg-primary">7</span></a></li>
+                                <li class="mb-2"><a href="#" class="text-decoration-none d-flex justify-content-between"><span>Content Marketing</span> <span class="badge bg-primary">10</span></a></li>
+                            </ul>
+                        </div>
+
+                        <!-- Recent Posts Widget -->
+                        <div class="sidebar-widget">
+                            <h5>Recent Articles</h5>
+                            <div class="recent-posts">
+                                <div class="recent-post d-flex">
+                                    <img src="img/recent-1.jpg" alt="Recent Post" class="me-3">
+                                    <div>
+                                        <h6 class="mb-1"><a href="#" class="text-decoration-none">5 Quick SEO Wins for Small Businesses</a></h6>
+                                        <small class="text-muted">January 14, 2025</small>
+                                    </div>
+                                </div>
+                                <div class="recent-post d-flex">
+                                    <img src="img/recent-2.jpg" alt="Recent Post" class="me-3">
+                                    <div>
+                                        <h6 class="mb-1"><a href="#" class="text-decoration-none">Instagram Stories: Creative Ideas That Convert</a></h6>
+                                        <small class="text-muted">January 11, 2025</small>
+                                    </div>
+                                </div>
+                                <div class="recent-post d-flex">
+                                    <img src="img/recent-3.jpg" alt="Recent Post" class="me-3">
+                                    <div>
+                                        <h6 class="mb-1"><a href="#" class="text-decoration-none">Google Analytics 4: What You Need to Know</a></h6>
+                                        <small class="text-muted">January 9, 2025</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tags Widget -->
+                        <div class="sidebar-widget">
+                            <h5>Popular Tags</h5>
+                            <div class="tag-cloud">
+                                <a href="#">Digital Marketing</a>
+                                <a href="#">SEO</a>
+                                <a href="#">Social Media</a>
+                                <a href="#">Google Ads</a>
+                                <a href="#">Content Marketing</a>
+                                <a href="#">Email Marketing</a>
+                                <a href="#">Web Design</a>
+                                <a href="#">Analytics</a>
+                                <a href="#">Conversion</a>
+                                <a href="#">ROI</a>
+                            </div>
+                        </div>
+
+                        <!-- Newsletter Widget -->
+                        <div class="sidebar-widget bg-primary text-white">
+                            <h5 class="text-white">Newsletter Signup</h5>
+                            <p class="mb-3">Get the latest digital marketing tips and strategies delivered to your inbox weekly.</p>
+                            <div class="input-group">
+                                <input type="email" class="form-control" placeholder="Your email address">
+                                <button class="btn btn-light" type="button">Subscribe</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Blog Section End -->
+        <!-- Blog End -->
 
-        <!-- Reuse Footer (same as FAQs page) -->
-        <div class="container-fluid text-light footer wow fadeIn" data-wow-delay="0.1s" style="background: linear-gradient(135deg, var(--primary), var(--secondary));">
+        <!-- Newsletter Start -->
+        <div class="container-xxl bg-primary newsletter py-5 wow fadeInUp" data-wow-delay="0.1s">
             <div class="container py-5 px-lg-5">
-                <!-- same footer content from your FAQs page -->
+                <div class="row justify-content-center">
+                    <div class="col-lg-7 text-center">
+                        <h2 class="text-center text-white mb-4">Stay Always In Touch</h2>
+                        <p class="text-white mb-4">Join our mailing list to receive the latest tips, trends, and strategies in digital marketing. From SEO to social media, stay updated with expert insights delivered straight to your inbox.</p>
+                        <div class="position-relative w-100 mt-3 newsletter-input">
+                            <input class="form-control border-0 rounded-pill w-100 ps-4 pe-5" type="text" placeholder="Enter Your Email" style="height: 48px;">
+                            <button type="button" class="btn shadow-none position-absolute top-0 end-0 mt-1 me-2"><i class="fa fa-paper-plane text-primary fs-4"></i></button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <!-- Footer End -->
+        <!-- Newsletter End -->
 
-    </div>
-
-    <!-- JS Files -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/isotope/isotope.pkgd.min.js"></script>
-    <script src="lib/lightbox/js/lightbox.min.js"></script>
-    <script src="js/main.js"></script>
-</body>
-</html>
+        <!-- Footer Start -->
+        <div class="container-fluid bg-primary text-light footer wow fadeIn" data-wow-delay="0.1s">
+            <div class="container py-5 px-lg-5">
+                <div class="row g-5">
+                    <div class="col-md-6 col-lg-3">
+                        <p class="section-title text-white h5 mb-4">Address<span></span></p>
+                        <p><i class="fa fa-map-marker-alt me-3"></i>Sector 1, K.K Nagar, Chennai</p>
+                        <p><i class="fa fa-phone-alt me-3"></i>+91 89391 44574</p>
+                        <p><i class="fa fa-envelope me-3"></i>growwithkishore@gmail.com</p>
+                        <div class="d-flex pt-2">
+                            <a class="btn btn-outline-light btn-social" href="https://x.com/growwithkishore"><i class="bi bi-twitter-x"></i></a>
+                            <a class="btn btn-outline-light btn-social" href="https://www.facebook.com/profile.php?id=61579755930204"><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-outline-light btn-social" href="https://www.instagram.com/growwithkishore/"><i class="fab fa-instagram"></i></a>
+                            <a class="btn btn-outline-light btn-social" href="https://www.linkedin.com/in/growwithkishore"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <p class="section-title text-white h5 mb-4">Quick Link
