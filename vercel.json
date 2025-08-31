@@ -10,18 +10,19 @@
       "destination": "/team.html",
       "permanent": true
     },
-
     {
       "source": "/index.html",
       "destination": "/",
       "permanent": true
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/.*",
-      "status": 404,
-      "dest": "/404.html"
+      "source": "/(.*)",
+      "destination": "/404.html",
+      "has": [
+        { "type": "missing" }
+      ]
     }
   ]
 }
