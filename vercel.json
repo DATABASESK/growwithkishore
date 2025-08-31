@@ -9,6 +9,12 @@
       "source": "/teams.html",
       "destination": "/team.html",
       "permanent": true
+    },
+
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
     }
   ],
   "routes": [
