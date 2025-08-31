@@ -4,8 +4,18 @@
       "source": "/contact.html",
       "destination": "/contact-us.html",
       "permanent": true
+    },
+    {
+      "source": "/teams.html",
+      "destination": "/team.html",
+      "permanent": true
+    }
+  ],
+  "routes": [
+    {
+      "src": "/.*",
+      "status": 404,
+      "dest": "/404.html"
     }
   ]
 }
-
-
