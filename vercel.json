@@ -12,13 +12,5 @@
     }
    
   ],
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/404.html",
-      "has": [
-        { "type": "missing" }
-      ]
-    }
-  ]
+ 
 }
