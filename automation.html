@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kishore's Social Post Automation</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* SCIFI/DARK BACKGROUND ANIMATION */
+        /* Modern, Dark, Animated Background */
         @keyframes gradient-shift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
@@ -16,262 +16,186 @@
         
         body { 
             font-family: 'Inter', sans-serif; 
-            background: linear-gradient(-45deg, #0f172a, #1e293b, #3b0764, #1e3a8a);
+            /* Deep, animated gradient for a modern 3D background feel */
+            background: linear-gradient(-45deg, #111827, #1e293b, #3b0764, #1e3a8a);
             background-size: 400% 400%;
-            animation: gradient-shift 25s ease infinite;
+            animation: gradient-shift 20s ease infinite;
             min-height: 100vh;
-            color: #f3f4f6; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
         }
 
-        /* FLOATING CARD PANELS */
+        /* Enhanced Card Design (Floating Glass Effect) */
         .card { 
-            backdrop-filter: blur(10px); 
-            background-color: rgba(30, 41, 59, 0.7); /* Deep blue/dark background */
-            border: 1px solid rgba(75, 85, 99, 0.3);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); 
-            transition: all 0.3s ease;
-            position: relative;
+            backdrop-filter: blur(20px); 
+            background-color: rgba(255, 255, 255, 0.05); /* Very subtle white background */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3); 
+            color: #f3f4f6; /* Light text color */
         }
-        .card:hover {
-            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.2);
-            border-color: rgba(99, 102, 241, 0.5);
-        }
-
-        /* INPUT STYLING (Dark Theme) */
+        
+        /* Input and Select Styling for Dark BG */
         .input-style {
-            background-color: #1f2937;
+            background-color: #374151; /* Darker input background */
             border: 1px solid #4b5563;
             color: #f3f4f6;
-            transition: border-color 0.2s;
+            transition: all 0.2s;
         }
-        .input-style::placeholder { color: #9ca3af; }
+        .input-style::placeholder {
+            color: #9ca3af;
+        }
         .input-style:focus {
-             border-color: #a855f7; /* Purple accent on focus */
-             outline: none;
+             box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5); /* Indigo glow */
+             border-color: #6366f1;
         }
 
-        /* POST BUTTON (Vibrant Gradient) */
-        .post-btn {
-            background: linear-gradient(90deg, #6366f1, #a855f7, #ec4899);
-            background-size: 200% 100%;
-            transition: background-position 0.5s, transform 0.2s;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        /* Button Enhancements */
+        .btn-primary { 
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
         }
-        .post-btn:hover:not(:disabled) {
-            background-position: -100% 0;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(168, 85, 247, 0.4);
+        .btn-primary:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 15px rgba(99, 102, 241, 0.4); 
         }
-        .post-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
+        .btn-primary:active { transform: translateY(0); }
 
-        /* LOADING SPINNER */
-        .loading-ring { border: 4px solid rgba(255, 255, 255, 0.2); border-top: 4px solid #a855f7; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; }
+        /* Loading Spinner */
+        .loading-ring { border: 4px solid rgba(255, 255, 255, 0.2); border-top: 4px solid #6366f1; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        /* STATUS LOGGER SPECIFIC */
-        #status-output p {
-            padding: 4px 0;
-            border-bottom: 1px dotted rgba(75, 85, 99, 0.5);
-        }
-
-        /* MODAL STYLING */
-        .modal-backdrop {
-            background-color: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(5px);
-        }
     </style>
 </head>
-<body class="p-8">
-
-    <!-- AI Caption Generator Modal -->
-    <div id="ai-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center modal-backdrop">
-        <div class="card p-8 rounded-2xl w-full max-w-lg space-y-6 transform transition-transform duration-300 scale-100">
-            <h3 class="text-3xl font-extrabold text-white">🤖 AI Caption Generator</h3>
-
-            <div class="space-y-2">
-                <label for="ai-topic" class="block text-sm font-medium text-gray-300">Core Post Topic / Idea</label>
-                <textarea id="ai-topic" rows="3" placeholder="e.g., The importance of Python automation..." class="w-full p-3 rounded-lg input-style">The importance of using Python for API automation to save development time.</textarea>
-            </div>
-
-            <div class="grid grid-cols-2 gap-4">
-                <div class="space-y-2">
-                    <label for="ai-platform" class="block text-sm font-medium text-gray-300">Target Platform</label>
-                    <select id="ai-platform" class="w-full p-3 rounded-lg input-style">
-                        <option value="LinkedIn">LinkedIn (Professional)</option>
-                        <option value="Instagram">Instagram (Engaging & Visual)</option>
-                    </select>
-                </div>
-                <div class="space-y-2">
-                     <label for="ai-tone" class="block text-sm font-medium text-gray-300">Desired Tone</label>
-                    <input type="text" id="ai-tone" value="Professional, insightful, and slightly inspirational" class="w-full p-3 rounded-lg input-style">
-                </div>
-            </div>
-            
-            <button id="ai-generate-button" onclick="generateAICaption()" class="w-full p-3 bg-pink-600 text-white font-semibold rounded-lg post-btn hover:bg-pink-700">
-                Generate Caption
-            </button>
-
-            <div class="space-y-2">
-                <label for="ai-output" class="block text-sm font-medium text-gray-300">Generated Caption</label>
-                <textarea id="ai-output" rows="5" readonly placeholder="Your new caption will appear here..." class="w-full p-3 rounded-lg input-style bg-gray-800/50"></textarea>
-            </div>
-
-            <button onclick="closeAIModal()" class="w-full p-3 bg-gray-600 text-white font-semibold rounded-lg hover:bg-gray-700">Close</button>
-        </div>
-    </div>
-
+<body class="p-4">
 
     <!-- Main Container -->
-    <div id="app" class="w-full max-w-6xl mx-auto">
+    <div id="app" class="w-full max-w-3xl">
 
         <!-- Login Screen -->
-        <div id="login-screen" class="card p-10 rounded-2xl space-y-8 w-full max-w-md mx-auto my-20">
-            <h2 class="text-4xl font-extrabold text-purple-400 text-center">Kishore's Social Post Automation</h2>
-            <p class="text-center text-gray-300">Enter credentials to access the dashboard</p>
+        <div id="login-screen" class="card p-10 rounded-2xl space-y-6">
+            <h2 class="text-4xl font-extrabold text-white text-center">🔐 Content Automation Login</h2>
+            <p class="text-center text-gray-400">Please enter your credentials to access the dashboard.</p>
             <input type="text" id="username" placeholder="Username" class="w-full p-4 rounded-lg input-style">
             <input type="password" id="password" placeholder="Secret Code" class="w-full p-4 rounded-lg input-style">
-            <button onclick="handleLogin()" class="w-full p-4 post-btn text-white font-bold text-lg rounded-lg">Sign In</button>
+            <button onclick="handleLogin()" class="w-full p-4 bg-indigo-600 text-white font-bold text-lg rounded-lg btn-primary hover:bg-indigo-700">Access Dashboard</button>
             <p id="login-message" class="text-center text-sm text-red-400"></p>
         </div>
 
         <!-- Dashboard Screen -->
         <div id="dashboard-screen" class="hidden">
-            <!-- Header -->
-            <header class="flex justify-between items-center py-4 px-6 mb-8 card rounded-xl">
-                <h1 class="text-2xl font-black text-purple-400">Social Post Automation</h1>
-                <div class="flex items-center space-x-4">
-                    <button onclick="openAIModal()" class="flex items-center space-x-2 text-white bg-indigo-600 p-2 rounded-lg hover:bg-indigo-700 transition">
-                        <span class="text-xl">✨</span>
-                        <span>AI Caption Generator</span>
-                    </button>
-                    <button onclick="logout()" class="flex items-center space-x-2 text-gray-400 hover:text-white transition">
-                        <span class="text-xl">➡️</span>
-                        <span>Logout</span>
-                    </button>
-                </div>
-            </header>
-
-            <!-- Main Dashboard Grid -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="card p-10 rounded-2xl space-y-8">
+                <h2 class="text-4xl font-extrabold text-white text-center tracking-wider">✨ Social Post Automation</h2>
                 
-                <!-- TOP LEFT: GitHub Content Panel -->
-                <div id="github-content-panel" class="card p-6 rounded-xl space-y-5">
-                    <h2 class="text-xl font-bold flex items-center space-x-2 text-indigo-400">
-                        <span>📦</span>
-                        <span>GitHub Content</span>
-                    </h2>
-
-                    <div class="space-y-4">
-                        <!-- Token Input (Hidden, but available for reference) -->
-                        <div class="space-y-2 hidden">
-                            <label for="github-token" class="block text-xs font-medium text-gray-400">GitHub Token (Saved)</label>
-                            <input type="password" id="github-token" placeholder="Enter your GitHub Token" class="w-full p-3 rounded-lg input-style" onchange="checkSelection()">
-                            <button onclick="clearGithubToken()" class="text-xs text-red-400 hover:text-red-300">Forget Stored Token</button>
-                        </div>
-                        
-                        <!-- Date Selector and Refresh -->
-                        <div class="flex items-end space-x-4">
-                            <div class="flex-1">
-                                <label for="content-date" class="block text-sm font-medium text-gray-300">Select Content Folder (YYYY-MM-DD)</label>
-                                <select id="content-date" class="w-full p-3 rounded-lg input-style" onchange="checkSelection()">
-                                    <option value="" disabled selected>Loading dates...</option>
-                                </select>
-                            </div>
-                            <button onclick="fetchContentDates()" class="p-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
-                                <span id="refresh-icon">🔄</span>
-                            </button>
-                        </div>
-                        
-                        <!-- Content Preview -->
-                        <div class="space-y-2 pt-3 border-t border-gray-600">
-                            <h3 class="text-sm font-medium text-gray-400">Content Preview:</h3>
-                            <div id="content-preview" class="space-y-1 text-sm text-gray-300">
-                                <p>image.png</p>
-                                <p>caption_linkedin.txt</p>
-                                <p>caption_instagram.txt</p>
-                            </div>
-                        </div>
-                    </div>
+                <!-- GitHub Token Input -->
+                <div class="space-y-2">
+                    <label for="github-token" class="block text-sm font-medium text-gray-300">GitHub Personal Access Token (for fetching files)</label>
+                    <input type="password" id="github-token" placeholder="Enter your GitHub Token" class="w-full p-3 rounded-lg input-style" onchange="checkSelection()">
                 </div>
 
-                <!-- TOP RIGHT: Platform & Posting Panel -->
-                <div id="posting-panel" class="card p-6 rounded-xl space-y-6">
-                    <h2 class="text-xl font-bold flex items-center space-x-2 text-indigo-400">
-                        <span>🚀</span>
-                        <span>Platform & Posting</span>
-                    </h2>
+                <!-- AI Caption Generator Section -->
+                <div class="space-y-4 p-6 border border-indigo-500 rounded-xl bg-indigo-900/30">
+                    <h3 class="text-xl font-bold text-indigo-300">🤖 AI Caption Generator</h3>
 
-                    <div class="space-y-4">
-                        <label class="block text-sm font-medium text-gray-300">Choose platforms to post:</label>
-                        <div class="flex flex-col space-y-3">
-                            <label class="flex items-center space-x-3 text-gray-200 cursor-pointer">
-                                <input id="platform-linkedin" type="checkbox" checked class="h-5 w-5 text-indigo-400 bg-gray-700 border-gray-600 rounded focus:ring-indigo-500">
-                                <span class="text-lg">LinkedIn</span>
-                            </label>
-                            <label class="flex items-center space-x-3 text-gray-200 cursor-pointer">
-                                <input id="platform-instagram" type="checkbox" checked class="h-5 w-5 text-indigo-400 bg-gray-700 border-gray-600 rounded focus:ring-indigo-500">
-                                <span class="text-lg">Instagram</span>
-                            </label>
-                        </div>
+                    <div class="space-y-2">
+                        <label for="ai-topic" class="block text-sm font-medium text-gray-300">Core Post Topic / Idea</label>
+                        <textarea id="ai-topic" rows="3" placeholder="e.g., The importance of Python automation to save development time..." class="w-full p-3 rounded-lg input-style">The importance of using Python for API automation to save development time.</textarea>
                     </div>
 
-                    <!-- Post Button -->
-                    <button id="post-button" onclick="handlePost()" class="w-full p-4 text-white font-bold text-xl rounded-lg post-btn flex items-center justify-center space-x-3" disabled>
-                        <span id="button-text">Select Content & Post Now</span>
-                        <div id="post-spinner" class="hidden loading-ring"></div>
+                    <div class="flex space-x-4">
+                        <div class="flex-1 space-y-2">
+                            <label for="ai-platform" class="block text-sm font-medium text-gray-300">Target Platform</label>
+                            <select id="ai-platform" class="w-full p-3 rounded-lg input-style">
+                                <option value="LinkedIn">LinkedIn (Professional)</option>
+                                <option value="Instagram">Instagram (Engaging & Visual)</option>
+                            </select>
+                        </div>
+                        <div class="flex-1 space-y-2">
+                             <label for="ai-tone" class="block text-sm font-medium text-gray-300">Desired Tone</label>
+                            <input type="text" id="ai-tone" value="Professional, insightful, and slightly inspirational" class="w-full p-3 rounded-lg input-style">
+                        </div>
+                    </div>
+                    
+                    <button id="ai-generate-button" onclick="generateAICaption()" class="w-full p-3 bg-pink-600 text-white font-semibold rounded-lg btn-primary hover:bg-pink-700">
+                        Generate Caption with AI
                     </button>
+
+                    <div class="space-y-2">
+                        <label for="ai-output" class="block text-sm font-medium text-gray-300">Generated Caption</label>
+                        <textarea id="ai-output" rows="5" readonly placeholder="Your new caption will appear here..." class="w-full p-3 rounded-lg input-style bg-gray-800/50"></textarea>
+                    </div>
                 </div>
 
-                <!-- BOTTOM: Status Logger Panel (Spans both columns on large screens) -->
-                <div id="status-panel" class="card p-6 rounded-xl space-y-4 lg:col-span-2">
+                <!-- Date Selector -->
+                <div class="space-y-2">
                     <div class="flex justify-between items-center">
-                        <h2 class="text-xl font-bold flex items-center space-x-2 text-green-400">
-                            <span>📜</span>
-                            <span>Status Logger</span>
-                        </h2>
-                        <button onclick="$('status-output').innerHTML = '<p class=\'text-gray-500\'>Logger cleared.</p>';" class="text-sm text-gray-500 hover:text-red-400">
-                            🗑️ Clear Log
+                        <label for="content-date" class="block text-sm font-medium text-gray-300">Select Content Date Folder</label>
+                        <button onclick="fetchContentDates()" class="flex items-center space-x-2 text-indigo-400 hover:text-indigo-200 text-sm font-medium">
+                            <span id="refresh-icon">🔄</span>
+                            <span id="refresh-text">Refresh Dates</span>
                         </button>
                     </div>
+                    <select id="content-date" class="w-full p-3 rounded-lg input-style" onchange="checkSelection()">
+                        <option value="" disabled selected>Loading dates...</option>
+                    </select>
+                </div>
 
-                    <div id="status-output" class="p-3 bg-gray-900/50 rounded-lg text-sm text-gray-300 max-h-60 overflow-y-auto border border-gray-700">
-                        <p class="text-gray-500">Dashboard initialized. Please log in.</p>
+                <!-- Platform Selection -->
+                <div class="space-y-3">
+                    <label class="block text-sm font-medium text-gray-300">Select Platforms to Post</label>
+                    <div class="flex space-x-8">
+                        <div class="flex items-center">
+                            <input id="platform-linkedin" type="checkbox" checked class="h-5 w-5 text-indigo-400 bg-gray-700 border-gray-600 rounded focus:ring-indigo-500">
+                            <label for="platform-linkedin" class="ml-2 block text-base font-medium text-gray-300">LinkedIn</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input id="platform-instagram" type="checkbox" checked class="h-5 w-5 text-indigo-400 bg-gray-700 border-gray-600 rounded focus:ring-indigo-500">
+                            <label for="platform-instagram" class="ml-2 block text-base font-medium text-gray-300">Instagram</label>
+                        </div>
                     </div>
+                </div>
+                
+                <!-- Post Button -->
+                <button id="post-button" onclick="handlePost()" class="w-full p-4 bg-green-500 text-white font-bold text-xl rounded-lg btn-primary hover:bg-green-600 flex items-center justify-center space-x-3" disabled>
+                    <span id="button-text">Select Content & Post Now</span>
+                    <div id="post-spinner" class="hidden loading-ring"></div>
+                </button>
+
+                <!-- Status Output -->
+                <div id="status-output" class="p-4 bg-gray-900 rounded-lg text-sm text-gray-300 space-y-2 max-h-60 overflow-y-auto border border-gray-700">
+                    <p class="text-gray-500">Automation ready. Enter your GitHub Token to load content dates.</p>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // --- 1. CONFIGURATION (READY FOR VERCEL INJECTION) ---
-        // NOTE: These secrets must be set as environment variables in Vercel and injected 
-        // during the build process to replace the placeholders (e.g., using sed).
-        
-        const config = {
-            // LOGIN (VITE_AUTH_USERNAME, VITE_AUTH_PASSWORD)
-             const AUTH_USERNAME = 'growwithkishore';
+        // ======================================================================
+        // 1. CONFIGURATION (Credentials & Repo Details)
+        // ======================================================================
+
+        const AUTH_USERNAME = 'growwithkishore';
         const AUTH_PASSWORD = 'GAYA3RIYA';
 
         const REPO_OWNER = "DATABASESK";
         const REPO_NAME = "kishore-personal-";
         const BRANCH = "main";
         const CONTENT_BASE_PATH = "content";
-        const GITHUB_TOKEN_KEY = 'githubToken'; // Key for LocalStorage
 
-        // --- Social Media API Access (Hardcoded for single-file deployment) ---
-        const ACCESS_TOKEN_LI = "AQU7hbGJY6eq-iU4pvHW_UvOoBZnxuFZvnKOLJ_koi7jeEvEpngj5bITIrB5H0F1ukhVMqeoH4szFjLMtaRep-Ot00HbbMb7GOrzBefR29AJg_uf3nYGWMQvWIJmAt-6iSAjgSGxJaAcp4EE568n0cBMBNt2N3QUSkbW4NONh3punVgj9j0hHGpjgAf1Q_yxKjb5LjGv75zYcwcQiM38GmmDahcKSgr6oyIjI88dXtaErenwZdWUgXmyi7EreoL8WQOZe_Bt6nd5kBXSyhDUk_gXArDPu52EvnKqJaJl5fuK8pStWTi8ckLtfuADsm7h02q2rOpVJKXzagSimWcWSrRC4JfFDg"; 
-        const PERSON_URN = "urn:li:person:puHZG_iSFo";                     
+        // --- Social Media API Access (These are required for posting) ---
+        // NOTE: These tokens are often short-lived and should be managed securely.
+        const ACCESS_TOKEN_LI = "AQU7hbGJY6eq-iU4pagSimWcWSrRC4JfFDg"; // Replace with real token
+        const PERSON_URN = "urn:li:person:puHo";                     // Your LinkedIn URN
 
-        const INSTAGRAM_BUSINESS_ID = "17841475537983796";             
-        const ACCESS_TOKEN_IG = "EAALAZBChjLPUBPrfixdR9fDuwvgKouoYpgue8pQxUCm3SPT7Muh8C0EZCjcoDN1tZAbGVwzWZA0rqc7ZBDrZBA9TgZBGpxQx5HYv4bZCapOzoEcZCbL3FzPyL8ZB4h16GW6QayBpyvMJywW8PVJAlGUB8ZCBteLr5Dv3CpfGtn7DD4HcmCZBD6yHZAi6G1HFAfYoN"; 
+        const INSTAGRAM_BUSINESS_ID = "17841475537983796";             // Your IG Business Account ID
+        const ACCESS_TOKEN_IG = "EAALAZBChjLPUBPrfixdR9fDuwvg4bZCapOzoEcZCbL3FzPyL8ZB4h16GW6QayBpyvMJywW8PVJAlGUB8ZCBteLr5Dv3CpfGtn7DD4HcmCZBD6yHZAi6G1HFAfYoN"; // Replace with real token
         
         // --- Gemini AI Configuration ---
-        const GEMINI_API_KEY = "AIzaSyBpb0ZeqVlpvHMrDMuJkPFCa-2zc8cZ_bA"; // Canvas handles this key
+        const GEMINI_API_KEY = ""; // Leave this empty, Canvas will inject the key at runtime
         const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent";
-        };
+
 
         // ======================================================================
         // 2. STATE MANAGEMENT & UI HELPERS
@@ -280,38 +204,10 @@
         let selectedDate = '';
 
         const $ = (id) => document.getElementById(id);
-
-        const getCurrentTimestamp = () => {
-            const now = new Date();
-            return now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-        };
-
         const log = (message, type = 'info') => {
             const output = $('status-output');
-            let icon = '➡️';
-            let color = 'text-gray-300';
-            
-            if (type === 'error') {
-                icon = '🛑';
-                color = 'text-red-400';
-            } else if (type === 'success') {
-                icon = '🎉';
-                color = 'text-green-400';
-            } else if (type === 'loading') {
-                icon = '🔄';
-                color = 'text-yellow-400';
-            }
-
-            const logEntry = `<p class="flex justify-between items-center ${color}">
-                <span class="flex items-center space-x-2"><span class="font-bold">${icon}</span><span>${message}</span></span>
-                <span class="text-gray-500 text-xs">${getCurrentTimestamp()}</span>
-            </p>`;
-            
-            output.innerHTML = logEntry + output.innerHTML;
-            // Limit log entries to keep performance fast
-            while (output.childElementCount > 50) {
-                output.removeChild(output.lastElementChild);
-            }
+            const color = type === 'error' ? 'text-red-400' : (type === 'success' ? 'text-green-400' : 'text-gray-300');
+            output.innerHTML = `<p class="flex items-center space-x-2"><span class="${color}">${type === 'error' ? '🛑' : (type === 'success' ? '🎉' : '➡️')}</span><span>${message}</span></p>` + output.innerHTML;
         };
 
         const toggleLoading = (isLoading) => {
@@ -333,8 +229,7 @@
 
         const checkSelection = () => {
             selectedDate = $('content-date').value;
-            // Note: We access the token directly from localStorage or the input field for checking readiness
-            const token = localStorage.getItem(config.GITHUB_TOKEN_KEY) || $('github-token').value; 
+            const token = $('github-token').value;
             const canPost = selectedDate && token;
             $('post-button').disabled = !canPost;
             if (canPost) {
@@ -343,79 +238,30 @@
                 $('button-text').textContent = 'Please select a content date';
             }
         };
-        
-        const openAIModal = () => $('ai-modal').classList.remove('hidden');
-        const closeAIModal = () => $('ai-modal').classList.add('hidden');
 
 
         // ======================================================================
-        // 3. AUTHENTICATION AND LOCAL STORAGE LOGIC
+        // 3. AUTHENTICATION LOGIC
         // ======================================================================
 
         function handleLogin() {
-            // Get user input and clean it up (trimming whitespace and forcing lowercase for username)
-            const usernameInput = $('username').value.trim().toLowerCase();
-            const passwordInput = $('password').value.trim();
+            const username = $('username').value;
+            const password = $('password').value;
             const message = $('login-message');
-            
-            // Check if Vercel failed to inject the variables (i.e., they are still the placeholder strings)
-            if (config.AUTH_USERNAME.startsWith('__VITE_')) {
-                 message.textContent = 'Configuration Error: Vercel environment variables not injected. Check build setup.';
-                 log('Critical Config Error. Cannot authenticate safely.', 'error');
-                 return;
-            }
 
-            // Compare cleaned inputs to constants
-            if (usernameInput === config.AUTH_USERNAME.toLowerCase() && passwordInput === config.AUTH_PASSWORD) {
+            if (username === AUTH_USERNAME && password === AUTH_PASSWORD) {
                 $('login-screen').classList.add('hidden');
                 $('dashboard-screen').classList.remove('hidden');
                 message.textContent = '';
-                log('Dashboard initialized successfully', 'success');
-                
-                // --- Load persisted GitHub Token or Injected Token ---
-                const storedToken = localStorage.getItem(config.GITHUB_TOKEN_KEY);
-                // Check if Vercel injected a token placeholder that is NOT the default string
-                const injectedToken = config.GITHUB_TOKEN_PLACEHOLDER.startsWith('ghp_') ? config.GITHUB_TOKEN_PLACEHOLDER : null;
-
-                if (storedToken) {
-                    $('github-token').value = storedToken;
-                    githubToken = storedToken; 
-                    log('Found stored GitHub Token. Loading content dates...');
-                } else if (injectedToken) {
-                     // Use injected token as the default, but still requires the user to click refresh to save it locally
-                    $('github-token').value = injectedToken;
-                    githubToken = injectedToken;
-                    log('Using GitHub Token injected by Vercel. Loading content dates...');
-                }
-
-                // Attach event listeners
+                log('Authentication successful. Welcome!');
+                // Automatically set up event listener after successful login
                 $('github-token').addEventListener('input', checkSelection);
                 $('content-date').addEventListener('change', checkSelection);
-                
-                // Trigger initial fetch if a token was found (either stored or injected)
-                if (storedToken || injectedToken) {
-                    fetchContentDates(); 
-                } else {
-                    log('Please enter your GitHub Token and click Refresh Dates.', 'info');
-                }
+                // Also trigger an initial fetch attempt
+                fetchContentDates();
             } else {
                 message.textContent = 'Invalid username or secret code.';
             }
-        }
-        
-        function logout() {
-            $('dashboard-screen').classList.add('hidden');
-            $('login-screen').classList.remove('hidden');
-            log('User logged out.', 'info');
-        }
-
-        function clearGithubToken() {
-            localStorage.removeItem(config.GITHUB_TOKEN_KEY);
-            $('github-token').value = '';
-            githubToken = '';
-            $('content-date').innerHTML = '<option value="" disabled selected>Enter token to load dates...</option>';
-            checkSelection();
-            log('Stored GitHub Token has been cleared from your browser.', 'info');
         }
 
         // ======================================================================
@@ -430,16 +276,16 @@
                 log('Please enter your GitHub Token first.', 'error');
                 return;
             }
-            // Use the token input directly as the source of truth for the API call
             githubToken = token;
             
-            $('refresh-icon').innerHTML = '<div class="loading-ring w-4 h-4 mx-1"></div>';
+            $('refresh-text').textContent = 'Fetching...';
+            $('refresh-icon').textContent = '⚙️';
             selectElement.innerHTML = '<option value="" disabled selected>Loading dates...</option>';
             $('post-button').disabled = true;
 
-            const url = `https://api.github.com/repos/${config.REPO_OWNER}/${config.REPO_NAME}/contents/${config.CONTENT_BASE_PATH}`;
+            const url = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${CONTENT_BASE_PATH}`;
             
-            log(`Refreshing GitHub folders...`, 'loading');
+            log(`Connecting to GitHub to fetch directories in /${CONTENT_BASE_PATH}/...`);
 
             try {
                 const response = await fetch(url, {
@@ -456,20 +302,19 @@
                     throw new Error(`GitHub API Error: ${response.statusText}`);
                 }
 
-                // If successful, save the token to local storage for persistence
-                localStorage.setItem(config.GITHUB_TOKEN_KEY, token); 
-
                 const data = await response.json();
                 
                 const dateFolders = data
                     .filter(item => item.type === 'dir' && /^\d{4}-\d{2}-\d{2}$/.test(item.name))
                     .map(item => item.name)
-                    .sort().reverse(); 
+                    .sort().reverse(); // Sort descending by date
 
-                selectElement.innerHTML = '<option value="" disabled selected>-- Select a Folder --</option>';
+                selectElement.innerHTML = '';
                 if (dateFolders.length === 0) {
+                    selectElement.innerHTML = '<option value="" disabled selected>No date folders found.</option>';
                     log('No date folders (YYYY-MM-DD) found in the content path.', 'info');
                 } else {
+                    selectElement.innerHTML = '<option value="" disabled selected>-- Select a Folder --</option>';
                     dateFolders.forEach(date => {
                         const option = document.createElement('option');
                         option.value = date;
@@ -482,7 +327,8 @@
                 log(`Failed to fetch content dates: ${error.message}`, 'error');
                 selectElement.innerHTML = '<option value="" disabled selected>Fetch failed. Check token.</option>';
             } finally {
-                $('refresh-icon').innerHTML = '🔄';
+                $('refresh-text').textContent = 'Refresh Dates';
+                $('refresh-icon').textContent = '🔄';
                 checkSelection();
             }
         }
@@ -500,14 +346,14 @@
             const outputArea = $('ai-output');
 
             if (!topic) {
-                log('Please provide a core post topic in the modal.', 'error');
+                log('Please provide a core post topic.', 'error');
                 return;
             }
 
             generateButton.disabled = true;
             generateButton.textContent = 'Generating Caption...';
             outputArea.value = '';
-            log(`Requesting AI Caption for ${platform} (Tone: ${tone})...`, 'loading');
+            log(`\n--- Requesting AI Caption for ${platform} ---`, 'info');
 
             const platformInstruction = platform === 'LinkedIn' 
                 ? 'Generate a professional, high-value post, focusing on business and career insights. Include relevant hashtags.'
@@ -521,19 +367,17 @@
                 contents: [{ parts: [{ text: userQuery }] }],
                 systemInstruction: { parts: [{ text: systemPrompt }] },
             };
-            
-            // Check if Vercel placeholder was replaced. If not, use the fallback key (empty string for Canvas).
-            const finalApiKey = config.GEMINI_API_KEY.startsWith('__VITE_') ? "" : config.GEMINI_API_KEY;
 
             try {
-                const response = await fetch(config.GEMINI_API_URL + `?key=${finalApiKey}`, {
+                // The GEMINI_API_KEY is an empty string, which the canvas environment automatically handles.
+                const response = await fetch(GEMINI_API_URL + `?key=${GEMINI_API_KEY}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
 
                 if (!response.ok) {
-                    throw new Error(`API call failed with status: ${response.status} (${response.statusText})`);
+                    throw new Error(`API call failed with status: ${response.status}`);
                 }
 
                 const result = await response.json();
@@ -541,17 +385,17 @@
 
                 if (generatedText) {
                     outputArea.value = generatedText;
-                    log('AI Caption generated successfully!', 'success');
+                    log('🎉 AI Caption generated successfully!', 'success');
                 } else {
                     throw new Error('AI response was empty or malformed.');
                 }
 
             } catch (error) {
-                log(`AI Generation Error: ${error.message}`, 'error');
+                log(`🛑 AI Generation Error: ${error.message}`, 'error');
                 outputArea.value = `Error generating caption: ${error.message}`;
             } finally {
                 generateButton.disabled = false;
-                generateButton.textContent = 'Generate Caption';
+                generateButton.textContent = 'Generate Caption with AI';
             }
         }
         
@@ -560,7 +404,7 @@
         // ======================================================================
         
         const getFileUrl = (date, filename) => {
-            return `https://raw.githubusercontent.com/${config.REPO_OWNER}/${config.REPO_NAME}/${config.BRANCH}/${config.CONTENT_BASE_PATH}/${date}/${filename}`;
+            return `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${BRANCH}/${CONTENT_BASE_PATH}/${date}/${filename}`;
         };
 
         async function fetchCaption(url) {
@@ -578,12 +422,13 @@
             if (!response.ok) {
                 throw new Error(`Failed to fetch image (Status: ${response.status}). Check if file exists.`);
             }
+            // Use response.blob() for LinkedIn raw upload
             return await response.blob(); 
         }
 
         // --- LINKEDIN POSTING ---
         async function postToLinkedIn(date) {
-            log('Starting LinkedIn post process...', 'loading');
+            log('Starting LinkedIn 3-step posting process...', 'info');
 
             const CAPTION_URL = getFileUrl(date, 'caption_linkedin.txt');
             const IMAGE_URL = getFileUrl(date, 'image.png');
@@ -595,16 +440,15 @@
                 const imageBlob = await fetchImageBlob(IMAGE_URL);
 
                 // 1. Register the image upload
-                log('   LinkedIn Step 1: Registering image upload...', 'info');
                 const registerUrl = "https://api.linkedin.com/v2/assets?action=registerUpload";
                 const headers = {
-                    "Authorization": `Bearer ${config.ACCESS_TOKEN_LI}`,
+                    "Authorization": `Bearer ${ACCESS_TOKEN_LI}`,
                     "Content-Type": "application/json"
                 };
                 const registerBody = {
                     "registerUploadRequest": {
                         "recipes": ["urn:li:digitalmediaRecipe:feedshare-image"],
-                        "owner": config.PERSON_URN,
+                        "owner": PERSON_URN,
                         "serviceRelationships": [
                             {"relationshipType": "OWNER", "identifier": "urn:li:userGeneratedContent"}
                         ]
@@ -617,23 +461,21 @@
                 const registerData = await res1.json();
                 const uploadUrl = registerData.value.uploadMechanism['com.linkedin.digitalmedia.uploading.MediaUploadHttpRequest'].uploadUrl;
                 assetUrn = registerData.value.asset;
-                log('   LinkedIn Step 1: Registration successful.', 'info');
+                log(`✅ LinkedIn Step 1: Registered upload. Asset URN: ${assetUrn}`);
 
                 // 2. Upload the image
-                log('   LinkedIn Step 2: Uploading image to LinkedIn...', 'info');
                 const uploadHeaders = { 
-                    "Authorization": `Bearer ${config.ACCESS_TOKEN_LI}`, 
+                    "Authorization": `Bearer ${ACCESS_TOKEN_LI}`, 
                     "Content-Type": "application/octet-stream" 
                 };
                 const res2 = await fetch(uploadUrl, { method: 'PUT', headers: uploadHeaders, body: imageBlob });
                 if (!res2.ok) throw new Error(`Step 2 (Upload) failed: ${res2.status} ${await res2.text()}`);
-                log('   LinkedIn Step 2: Image uploaded successfully.', 'info');
+                log('✅ LinkedIn Step 2: Image uploaded successfully.');
 
                 // 3. Post the content
-                log('   LinkedIn Step 3: Publishing post...', 'info');
                 const postUrl = "https://api.linkedin.com/v2/ugcPosts";
                 const postBody = {
-                    "author": config.PERSON_URN,
+                    "author": PERSON_URN,
                     "lifecycleState": "PUBLISHED",
                     "specificContent": {
                         "com.linkedin.ugc.ShareContent": {
@@ -649,7 +491,7 @@
                 const res3 = await fetch(postUrl, { method: 'POST', headers, body: JSON.stringify(postBody) });
                 if (!res3.ok) throw new Error(`Step 3 (Post) failed: ${res3.status} ${await res3.text()}`);
                 
-                log('LinkedIn Post created successfully!', 'success');
+                log('🎉 LinkedIn Post created successfully!', 'success');
 
             } catch (error) {
                 log(`🛑 LinkedIn Post failed: ${error.message}`, 'error');
@@ -658,7 +500,7 @@
 
         // --- INSTAGRAM POSTING ---
         async function postToInstagram(date) {
-            log('Starting Instagram post process...', 'loading');
+            log('Starting Instagram 2-step posting process...', 'info');
 
             const CAPTION_URL = getFileUrl(date, 'caption_instagram.txt');
             const IMAGE_URL = getFileUrl(date, 'image.png');
@@ -668,16 +510,19 @@
                 const CAPTION_TEXT = await fetchCaption(CAPTION_URL);
                 
                 // 1. Create Media Container with Caption
-                log('   Instagram Step 1: Creating media container...', 'info');
-                const mediaUrl = `https://graph.facebook.com/v17.0/${config.INSTAGRAM_BUSINESS_ID}/media`;
+                const mediaUrl = `https://graph.facebook.com/v17.0/${INSTAGRAM_BUSINESS_ID}/media`;
                 
+                // Use URLSearchParams for form-data style parameters
                 const mediaParams = new URLSearchParams({
                     image_url: IMAGE_URL,
                     caption: CAPTION_TEXT,
-                    access_token: config.ACCESS_TOKEN_IG
+                    access_token: ACCESS_TOKEN_IG
                 });
 
-                const res1 = await fetch(mediaUrl, { method: 'POST', body: mediaParams });
+                const res1 = await fetch(mediaUrl, { 
+                    method: 'POST', 
+                    body: mediaParams
+                });
 
                 if (!res1.ok) throw new Error(`Step 1 (Container) failed: ${res1.status} ${await res1.text()}`);
                 
@@ -685,21 +530,23 @@
                 mediaContainerId = data1.id;
                 if (!mediaContainerId) throw new Error('Container ID not found in response.');
 
-                log('   Instagram Step 1: Container created successfully.', 'info');
+                log(`✅ Instagram Step 1: Media container created. ID: ${mediaContainerId}`);
 
                 // 2. Publish the Media
-                log('   Instagram Step 2: Publishing post...', 'info');
-                const publishUrl = `https://graph.facebook.com/v17.0/${config.INSTAGRAM_BUSINESS_ID}/media_publish`;
+                const publishUrl = `https://graph.facebook.com/v17.0/${INSTAGRAM_BUSINESS_ID}/media_publish`;
                 const publishParams = new URLSearchParams({
                     creation_id: mediaContainerId,
-                    access_token: config.ACCESS_TOKEN_IG
+                    access_token: ACCESS_TOKEN_IG
                 });
 
-                const res2 = await fetch(publishUrl, { method: 'POST', body: publishParams });
+                const res2 = await fetch(publishUrl, {
+                    method: 'POST',
+                    body: publishParams
+                });
 
                 if (!res2.ok) throw new Error(`Step 2 (Publish) failed: ${res2.status} ${await res2.text()}`);
 
-                log('Instagram Post published successfully!', 'success');
+                log('🎉 Instagram Post published successfully!', 'success');
 
             } catch (error) {
                 log(`🛑 Instagram Post failed: ${error.message}`, 'error');
@@ -740,9 +587,9 @@
             toggleLoading(false);
         }
 
-        // Initialize: Set up initial listeners
+        // Initialize: Check for token input changes on page load (after login)
         window.onload = () => {
-             // Listener setup is handled inside handleLogin for sequence control.
+             // We don't call handleLogin, just set up listener for later login success
         };
     </script>
 </body>
