@@ -176,24 +176,24 @@
         // 1. CONFIGURATION (Credentials & Repo Details)
         // ======================================================================
 
-        const AUTH_USERNAME = 'growwithkishore';
+         const AUTH_USERNAME = 'growwithkishore';
         const AUTH_PASSWORD = 'GAYA3RIYA';
 
         const REPO_OWNER = "DATABASESK";
         const REPO_NAME = "kishore-personal-";
         const BRANCH = "main";
         const CONTENT_BASE_PATH = "content";
+        const GITHUB_TOKEN_KEY = 'githubToken'; // Key for LocalStorage
 
-        // --- Social Media API Access (These are required for posting) ---
-        // NOTE: These tokens are often short-lived and should be managed securely.
-        const ACCESS_TOKEN_LI = "AQU7hbGJY6eq-iU4pagSimWcWSrRC4JfFDg"; // Replace with real token
-        const PERSON_URN = "urn:li:person:puHo";                     // Your LinkedIn URN
+        // --- Social Media API Access (Hardcoded for single-file deployment) ---
+        const ACCESS_TOKEN_LI = "AQU7hbGJY6eq-iU4pvHW_UvOoBZnxuFZvnKOLJ_koi7jeEvEpngj5bITIrB5H0F1ukhVMqeoH4szFjLMtaRep-Ot00HbbMb7GOrzBefR29AJg_uf3nYGWMQvWIJmAt-6iSAjgSGxJaAcp4EE568n0cBMBNt2N3QUSkbW4NONh3punVgj9j0hHGpjgAf1Q_yxKjb5LjGv75zYcwcQiM38GmmDahcKSgr6oyIjI88dXtaErenwZdWUgXmyi7EreoL8WQOZe_Bt6nd5kBXSyhDUk_gXArDPu52EvnKqJaJl5fuK8pStWTi8ckLtfuADsm7h02q2rOpVJKXzagSimWcWSrRC4JfFDg"; 
+        const PERSON_URN = "urn:li:person:puHZG_iSFo";                     
 
-        const INSTAGRAM_BUSINESS_ID = "17841475537983796";             // Your IG Business Account ID
-        const ACCESS_TOKEN_IG = "EAALAZBChjLPUBPrfixdR9fDuwvg4bZCapOzoEcZCbL3FzPyL8ZB4h16GW6QayBpyvMJywW8PVJAlGUB8ZCBteLr5Dv3CpfGtn7DD4HcmCZBD6yHZAi6G1HFAfYoN"; // Replace with real token
+        const INSTAGRAM_BUSINESS_ID = "17841475537983796";             
+        const ACCESS_TOKEN_IG = "EAALAZBChjLPUBPrfixdR9fDuwvgKouoYpgue8pQxUCm3SPT7Muh8C0EZCjcoDN1tZAbGVwzWZA0rqc7ZBDrZBA9TgZBGpxQx5HYv4bZCapOzoEcZCbL3FzPyL8ZB4h16GW6QayBpyvMJywW8PVJAlGUB8ZCBteLr5Dv3CpfGtn7DD4HcmCZBD6yHZAi6G1HFAfYoN"; 
         
         // --- Gemini AI Configuration ---
-        const GEMINI_API_KEY = ""; // Leave this empty, Canvas will inject the key at runtime
+        const GEMINI_API_KEY = "AIzaSyBpb0ZeqVlpvHMrDMuJkPFCa-2zc8cZ_bA"; // Canvas handles this key
         const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent";
 
 
